@@ -12,8 +12,6 @@ import base64
 import logging
 import io
 import config
-import sys
-import pkg_resources
 from openai import OpenAI
 
 ############################################################################################################
