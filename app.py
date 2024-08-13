@@ -157,23 +157,31 @@ if 'selected_term' not in st.session_state:
 if 'display_term' not in st.session_state:
    st.session_state.display_term = False
 
-# Toggle term display and select a new term if needed
-if st.button('Click to pick a term'):
+# Dropdown menu for selecting a term
+selected_term = st.selectbox('Select a term:', term_list)
+if selected_term:
+    selected_schema = terms.loc[terms['TERM'] == selected_term, 'SCHEMA'].values[0]
+    st.session_state.selected_term = selected_term
+    st.session_state.selected_schema = selected_schema
+    st.session_state.display_term = True
+
+# Button to select a random term
+if st.button('Click to pick a random term'):
     selected_term, selected_schema = select_random_term_and_schema(terms)
     st.session_state.selected_term = selected_term
     st.session_state.selected_schema = selected_schema
     st.session_state.display_term = True
 
-    # Update the initial context with dynamic content
-    updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_schema, term_list)
-    initial_context = {
-        "role": "system", 
-        "content": updated_prompt}
+# Update the initial context with dynamic content
+updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_schema, term_list)
+initial_context = {
+    "role": "system", 
+    "content": updated_prompt}
 
-    # Reset the conversation with the new initial context
-    st.session_state.display_messages = [initial_context]
+# Reset the conversation with the new initial context
+st.session_state.display_messages = [initial_context]
 
-# Display the term if the condition is met
+# Display the selected term and its schema
 if st.session_state.display_term and st.session_state.selected_term:
     st.header(st.session_state.selected_term)
     # Pass the displayed term to the assistant as part of the message

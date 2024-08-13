@@ -27,7 +27,7 @@ presence_penalty = 0.5
 
 # Below is the name for your default csv terms file. You can change this to any csv file you want to use as your default terms file. It must be in the same folder as the main app.py file.
 
-default_terms_csv = "bild4_week1.csv"
+default_terms_csv = "bild4_week2_running.csv"
 
 ############################################################################################################
 
