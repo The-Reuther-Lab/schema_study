@@ -49,6 +49,7 @@ The goal of this app is to help you learn and and assess your knowledge of core 
 2. *Pause and think for 30 seconds.* What is everything you associate with this term? What is a simple definition or example?
 3. Write as little or as much as you'd like about the selected term. Try to include a real-world example or anything you might need to know for an exam. 
 4. Please follow-up with questions. If you don't know something, just ask. It is perfectly ok to write: "I have no idea what this term means." **Have a conversation!**
+---
 **WANT TO LEVEL UP?**
 - Ask the chatbot to provide you with a random term from the list. 
 - Ask the chatbot: 'Choose 3 terms and prompt me to connect them in a hypothetical scenario.'
