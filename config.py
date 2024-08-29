@@ -51,8 +51,7 @@ The goal of this app is to help you learn and and assess your knowledge of core 
 4. Please follow-up with questions. If you don't know something, just ask. It is perfectly ok to write: "I have no idea what this term means." **Have a conversation!**
 ---
 **WANT TO LEVEL UP?**
-- Ask the chatbot to provide you with a random term from the list. 
-- Ask the chatbot: 'Choose 3 terms and prompt me to connect them in a hypothetical scenario.'
+- Ask the chatbot: 'Choose 2 additional terms from the course and prompt me to connect them in a hypothetical scenario.'
 '''
 
 # The title of the sidebar
