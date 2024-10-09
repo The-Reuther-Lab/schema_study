@@ -1,72 +1,67 @@
 # Schema Study: An AI-Enhanced Study App for Biology Students
 
-Welcome to the DIY AI-Enhanced Study App repository. This application is designed to help biology students learn and assess their knowledge of core course concepts through interactive study sessions. Educators can customize the app by uploading their own terms and schemas, and students can engage with an AI-powered chatbot to receive instant feedback and guidance.
+Schema Study is a DIY AI-Enhanced Study App designed to assist biology students in mastering core course concepts through interactive study sessions. This application leverages AI technology to provide instant feedback and guidance, making it a valuable tool for both students and educators.
+
+## Pedagogical Value
+
+Schema Study enhances the learning experience by:
+
+- **Promoting Active Learning:** Students engage with course material interactively, which helps reinforce their understanding.
+- **Providing Instant Feedback:** The AI-powered chatbot offers immediate responses, allowing students to correct misconceptions in real-time.
+- **Encouraging Critical Thinking:** By using the Socratic method, the app guides students to explore concepts deeply and make connections between different terms.
+- **Customizable Content:** Educators can tailor the app to their curriculum by uploading specific terms and schemas, ensuring relevance to their course.
 
 ## Features
 
-- **Password Protection:** Secure access to the app.
-- **Customizable Terms:** Upload your own CSV file with terms and schemas.
-- **Random Term Selection:** Randomly pick terms for study sessions.
-- **AI-Enhanced Feedback:** Utilize OpenAI's GPT-4o model to provide definitions, explanations, and formative feedback.
-- **Interactive Chat:** Engage in a conversation with the AI chatbot to deepen understanding.
+- **Password Protection:** Ensures secure access to the app.
+- **Customizable Terms:** Educators can upload a CSV file with their own terms and schemas.
+- **Random Term Selection:** Facilitates varied study sessions by randomly selecting terms.
+- **AI-Enhanced Feedback:** Utilizes OpenAI's GPT-4o model to provide detailed explanations and formative feedback.
+- **Interactive Chat:** Engages students in a dialogue with the AI chatbot to deepen their understanding.
 
-## Getting Started
+## How the App Works
 
-### Prerequisites
+### For Students
 
-- Python 3.7 or higher
-- Streamlit
-- Pandas
-- OpenAI API Key
+1. **Access the App:** Open your web browser and navigate to `http://localhost:8501`. Enter the password when prompted.
+2. **Upload Terms:** Use the sidebar file uploader to upload a CSV file containing terms and schemas. The file should have two columns: `TERM` and `SCHEMA`.
+3. **Start Studying:** Click the button to select a random term and begin your interactive study session with the AI chatbot.
+4. **Engage with the AI:** Use the chat interface to ask questions and receive feedback on your understanding of the term.
 
-### Installation
+### For Instructors
 
 1. **Clone the Repository:**
 
-```bash
-git clone https://github.com/keefereuther/schema_study.git
-cd schema_study
-```
+   ```bash
+   git clone https://github.com/keefereuther/schema_study.git
+   cd schema_study
+   ```
 
 2. **Install the Required Packages:**
 
-```bash
-pip install -r requirements.txt
-```
+   ```bash
+   pip install -r requirements.txt
+   ```
 
 3. **Set Up Your Configuration:**
 
-Update the `config.py` file with your desired settings.
+   Update the `config.py` file with your desired settings.
 
 4. **Create a '.streamlit/secrets.toml' file and directory.**
 
-Add your OpenAI API key and the app password:
+   Add your OpenAI API key and the app password:
 
-```toml
-[general]
-OPENAI_API_KEY = "your-openai-api-key"
-password = "your-app-password"
-```
+   ```toml
+   [general]
+   OPENAI_API_KEY = "your-openai-api-key"
+   password = "your-app-password"
+   ```
 
-### Usage
+5. **Run the App:**
 
-1. **Run the App:**
-
-```bash
-streamlit run app.py
-```
-
-2. **Access the App:**
-
-Open your web browser and go to `http://localhost:8501`. You will be prompted to enter the password.
-
-3. **Upload Terms:**
-
-Upload your CSV file with terms and schemas through the sidebar file uploader. The file should have two columns: `TERM` and `SCHEMA`.
-
-4. **Start Studying:**
-
-Click the button to pick a random term, and start your interactive study session with the AI chatbot.
+   ```bash
+   streamlit run app.py
+   ```
 
 ## Configuration
 
@@ -89,4 +84,4 @@ This project is licensed under the GNU GPL-3 License - see the [LICENSE](LICENSE
 
 ## Acknowledgments
 
-Developed by Keefe Reuther, Assistant Teaching Professor in the UC San Diego School of Biological Sciences. Special thanks to the members of the Reuther Lab for their support and contributions.
+Developed by Keefe Reuther and Liam O Mueller, Assistant Teaching Professors in the UC San Diego School of Biological Sciences. Special thanks to the members of the Reuther Lab for their support and contributions.

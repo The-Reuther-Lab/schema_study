@@ -7,7 +7,7 @@
 # Below is the configuration for the chatbot
 
 # The model_name refers to the name of the model you want to use. You can choose from the following models: 
-ai_model = "gpt-4o"
+ai_model = "gpt-4o-mini"
 
 # Temperature refers to the randomness/creativity of the responses. A higher temperature will result in more random/creative responses. It varies between 0 and 1.
 temperature = 0
@@ -52,6 +52,8 @@ The goal of this app is to help you learn and and assess your knowledge of core 
 ---
 **WANT TO LEVEL UP?**
 - Ask the chatbot: 'Choose 2 additional terms from the course and prompt me to connect them in a hypothetical scenario.'
+- Ask the chatbot: 'Please give me an example mathematical problem that uses this term.'
+- Ask the chatbot: 'Please tell me two truths and a lie about this term. I need to choose the lie and explain my reasoning'
 '''
 
 # The title of the sidebar
@@ -60,7 +62,7 @@ sidebar_title = "Have your own terms to study?"
 # The instructions for the template
 sidebar_instructions = "Do you have your own terms to study? If so, download the terms_template.csv file. You can delete everything below the first row and add in your own terms in the first column. You can open and edit it in Excel, Google Sheets, or any text editor. Make sure that you don't change the file extension from csv. Once done, upload it below. The app will use your terms for the study session."
 
-app_creation_message = "The template for this app was created by Keefe Reuther and the members of the Reuther Lab - [https://reutherlab.biosci.ucsd.edu/](https://reutherlab.netlify.app/)"
+app_creation_message = "The template for this app was created by Keefe Reuther, Liam O Mueller, and the members of the Reuther Lab - [https://reutherlab.biosci.ucsd.edu/](https://reutherlab.netlify.app/)"
 
 app_repo_license_message = "It can be found at [https://github.com/The-Reuther-Lab/schema_study](https://github.com/The-Reuther-Lab/schema_study) and is distributed under the GNU GPL-3 License."
 
@@ -80,18 +82,25 @@ def term_prompt(selected_term, selected_schema, term_list):
 
 ############################################################################################################
 
-
-############################################################################################################
-
 ### RESOURCES
 
 # Resources: In this section, you can add links for the student to access and potentially learn more about the topic or verify information.
 # You can add the title of the resource, the URL, and a brief description. To delete or add more resources, follow the same format.
 resources = [
+        {
+        "title": "OpenAI Prompt engineering guide",
+        "url": "https://platform.openai.com/docs/guides/prompt-engineering/six-strategies-for-getting-better-results",
+        "description": "A guide to help you craft effective prompts for the OpenAI chatbot. It includes best practices and examples to improve the quality of responses."
+    },
     {
-        "title": "Evolution 101 - UC Berkeley",
-        "url": "https://evolution.berkeley.edu/evolution-101/",
-        "description": "A comprehensive guide to the basics of evolution, covering key concepts, history of life, and evolutionary mechanisms."
+        "title": "UC Berkeley Library Guide to Detecting Fake News",
+        "url": "https://guides.lib.berkeley.edu/fake-news",
+        "description": "This UC Berkeley Library guide offers comprehensive strategies and resources for identifying fake news, understanding its impact, and evaluating the credibility of various news sources, including lists of known fake news sites and tips for detecting misinformation."
+    },
+        {
+        "title": "Is it cheating to use ChatGPT?",
+        "url": "https://guides.lib.berkeley.edu/fake-news",
+        "description": "The UC San Diego Academic Integrity Office provides guidance on the appropriate use of generative AI tools in educational settings, emphasizing the importance of adhering to instructor guidelines and the potential consequences of misuse, including integrity violations and academic penalties."
     },
     {
         "title": "OpenStax - Biology",
