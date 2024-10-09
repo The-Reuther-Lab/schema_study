@@ -15,7 +15,6 @@ Schema Study enhances the learning experience by:
 
 - **Password Protection:** Ensures secure access to the app.
 - **Customizable Terms:** Educators can upload a CSV file with their own terms and schemas.
-- **Random Term Selection:** Facilitates varied study sessions by randomly selecting terms.
 - **AI-Enhanced Feedback:** Utilizes OpenAI's GPT-4o model to provide detailed explanations and formative feedback.
 - **Interactive Chat:** Engages students in a dialogue with the AI chatbot to deepen their understanding.
 
