@@ -85,9 +85,15 @@ def term_prompt(selected_term, selected_schema, term_list):
 ### RESOURCES
 
 # Resources: In this section, you can add links for the student to access and potentially learn more about the topic or verify information.
-# You can add the title of the resource, the URL, and a brief description. To delete or add more resources, follow the same format.
+# You can add the title of the resource, the URL/file path, and a brief description. To delete or add more resources, follow the same format.
 resources = [
-        {
+    {
+        "title": "Course Syllabus",
+        "file_path": "syllabus-template.docx",
+        "description": "Download the course syllabus. **Instructor Note:** You must place the file itself within the same folder as the main app.py file in your GitHub repository."
+    },
+    # In this next line you can add a URLs to the resources section. Just edit the current URL and description. If you need more lines, just copy and paste to add an additional resource. Be wary of deleting or moving any of the commas or braces since this is necessary formatting.
+    {
         "title": "OpenAI Prompt engineering guide",
         "url": "https://platform.openai.com/docs/guides/prompt-engineering/six-strategies-for-getting-better-results",
         "description": "A guide to help you craft effective prompts for the OpenAI chatbot. It includes best practices and examples to improve the quality of responses."

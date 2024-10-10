@@ -1,4 +1,3 @@
-
 ############################################################################################################
 # Importing Libraries
 
@@ -278,7 +277,23 @@ for resource in config.resources:
     with st.sidebar:
         with st.expander(resource["title"]):
             st.markdown(f"Description: {resource['description']}")
-            st.markdown(f"[Link]({resource['url']})")
+            if "url" in resource:
+                st.markdown(f"[{resource['title']}]({resource['url']})")
+            if "file_path" in resource:
+                file_path = resource["file_path"]
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as file:
+                        file_bytes = file.read()
+                    with st.spinner(f"Loading {resource['title']}..."):
+                        st.download_button(
+                            label=resource["title"],
+                            data=file_bytes,
+                            file_name=os.path.basename(file_path),
+                            mime="application/octet-stream",
+                            help=resource["description"],
+                        )
+                else:
+                    st.warning(f"File not found: {file_path}")
 
 # Footer
 with st.sidebar:
