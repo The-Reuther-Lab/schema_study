@@ -45,15 +45,16 @@ intro_para = "An AI-enhanced study app for biology students."
 # The user's instructions for the app
 instructions = '''
 The goal of this app is to help you learn and and assess your knowledge of core course concepts and examples. 
-1. Choose a course term from the drop down menu.
-2. *Pause and think for 30 seconds.* What is everything you associate with this term? What is a simple definition or example?
-3. Write as little or as much as you'd like about the selected term. Try to include a real-world example or anything you might need to know for an exam. 
+1. Choose a course term/phrase from the drop down menu.
+2. *Pause and think for 30 seconds.* What is everything you associate with this term/phrase? What is a simple definition or example?
+3. Write as little or as much as you'd like about it. Try to include anything you might need to know for an exam. 
 4. Please follow-up with questions. If you don't know something, just ask. It is perfectly ok to write: "I have no idea what this term means." **Have a conversation!**
 ---
 **WANT TO LEVEL UP?**
 - Ask the chatbot: 'Choose 2 additional terms from the course and prompt me to connect them in a hypothetical scenario.'
 - Ask the chatbot: 'Please give me an example mathematical problem that uses this term.'
 - Ask the chatbot: 'Please tell me two truths and a lie about this term. I need to choose the lie and explain my reasoning'
+- **Get creative! Play around and see what happens!**
 '''
 
 # The title of the sidebar

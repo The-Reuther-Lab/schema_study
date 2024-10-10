@@ -161,7 +161,7 @@ if 'display_term' not in st.session_state:
 
 #with tab1:
     # Dropdown menu for selecting a term
-selected_term = st.selectbox('Select a term:', term_list)
+selected_term = st.selectbox('Select a term/question and brainstorm everything about it. This could include a definition, examples, misconceptions, associations, etc.', term_list)
 if selected_term:
     selected_schema = terms.loc[terms['TERM'] == selected_term, 'SCHEMA'].values[0]
     st.session_state.selected_term = selected_term
