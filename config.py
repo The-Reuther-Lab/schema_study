@@ -37,7 +37,7 @@ default_terms_csv = "terms_template.csv"
 app_title = "Schema Study"
 
 # The subtitle of the app
-app_author = "courtesy of Keefe Reuther and Liam O Mueller, Assistant Teaching Professors in the UC San Diego School of Biological Sciences"
+app_author = "by Keefe Reuther and Liam O Mueller, Assistant Teaching Professors in the UC San Diego School of Biological Sciences"
 
 # This is an intro paragraph you can add under the title. it is not currently being used in the app.
 intro_para = "An AI-enhanced study app for biology students."
