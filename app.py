@@ -46,7 +46,7 @@ if not check_password():
 # Streamlit app layout
 
 # Set the page to wide or centered mode
-st.set_page_config(layout="centered")
+st.set_page_config(layout="wide")
 
 # Streamlit app layout
 st.title(config.app_title)
