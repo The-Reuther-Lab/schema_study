@@ -51,9 +51,9 @@ The goal of this app is to help you learn and and assess your knowledge of core 
 4. Please follow-up with questions. If you don't know something, just ask. It is perfectly ok to write: "I have no idea what this term means." **Have a conversation!**
 ---
 **WANT TO LEVEL UP?**
-- Ask the chatbot: 'Choose 2 additional terms from the course and prompt me to connect them in a hypothetical scenario.'
+- Ask the chatbot: 'I want to test my ability to connect this term to others in the term list. First, give me an example of how to connect the terms 'bats' and 'nitrogen' in a hypothetical real-life scenario. Second, prompt me to similarly create a logical applied scenario between the term I chose and one other you choose randomly from the course term list. Your role is to provide feedback on the scenario I create.'
 - Ask the chatbot: 'Please give me an example mathematical problem that uses this term.'
-- Ask the chatbot: 'Please tell me two truths and a lie about this term. I need to choose the lie and explain my reasoning'
+- Ask the chatbot: 'Please tell me two truths and a lie about this term. I need to choose the lie and explain my reasoning. Make the lies subtle and highlight common misconceptions.'
 - **Get creative! Play around and see what happens!**
 '''
 

@@ -125,17 +125,6 @@ st.sidebar.markdown('<hr>', unsafe_allow_html=True)
 ############################################################################################################
 # Term Selection and session state
 
-# Function to select a random term and its schema
-# def select_random_term_and_schema(terms_df):
-#     if not terms_df.empty and 'TERM' in terms_df.columns and 'SCHEMA' in terms_df.columns:
-#         #random.seed(counter)
-#         selected_row = terms_df.sample()
-#         selected_term = selected_row['TERM'].values[0]
-#         selected_schema = selected_row['SCHEMA'].values[0]
-#         return selected_term, selected_schema
-#     else:
-#         return None, None
-    
 # Define a basic initial context at the beginning of your script
 initial_context = {
     "role": "system",
@@ -156,25 +145,13 @@ if 'selected_term' not in st.session_state:
 if 'display_term' not in st.session_state:
    st.session_state.display_term = False
 
-# Create tabs
-#tab1, tab2 = st.tabs(["Select a Term", "Pick a Random Term"])
-
-#with tab1:
-    # Dropdown menu for selecting a term
+# Dropdown menu for selecting a term
 selected_term = st.selectbox('Select a term/question and brainstorm everything about it. This could include a definition, examples, misconceptions, associations, etc.', term_list)
 if selected_term:
     selected_schema = terms.loc[terms['TERM'] == selected_term, 'SCHEMA'].values[0]
     st.session_state.selected_term = selected_term
     st.session_state.selected_schema = selected_schema
     st.session_state.display_term = True
-
-#with tab2:
-    # Button to select a random term
-    #if st.button('Click to pick a random term'):
-        #selected_term, selected_schema = select_random_term_and_schema(terms)
-        #st.session_state.selected_term = selected_term
-        #st.session_state.selected_schema = selected_schema
-        #st.session_state.display_term = True
 
 # Ensure the session state variables are set correctly
 # if st.session_state.get('selected_term') and st.session_state.get('selected_schema'):
@@ -216,7 +193,6 @@ if st.session_state.get('selected_term') and st.session_state.get('selected_sche
     }
     # Replace the initial context in display_messages with the updated prompt
     st.session_state.display_messages[0] = initial_context
-
 
 # Get user input
 prompt = st.chat_input("Type your message here...")
