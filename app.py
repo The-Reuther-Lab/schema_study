@@ -204,6 +204,18 @@ if prompt:
         st.session_state["display_messages"].append(initial_context)
     st.session_state["display_messages"].append({"role": "user", "content": prompt})
 
+# Function to reset all chat-related session state
+def reset_chat_history():
+    st.session_state["display_messages"] = [initial_context]
+    # Reset other chat-related session states if they exist
+    if 'selected_term' in st.session_state:
+        st.session_state.selected_term = None
+    if 'selected_schema' in st.session_state:
+        st.session_state.selected_schema = None
+    if 'display_term' in st.session_state:
+        st.session_state.display_term = False
+    st.rerun()
+
 # Main chat container
 with st.container(height=400, border=True):
     # Display chat history in reverse order including new messages
@@ -217,29 +229,31 @@ with st.container(height=400, border=True):
 
 # Generate assistant's response and add it to the messages
     if prompt:
-        # Call the OpenAI API without streaming to get a complete response
-        response = client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state["display_messages"]
-            ],
-            stream=False,  # Disable streaming
-            temperature=config.temperature,
-            max_tokens=config.max_tokens,
-            frequency_penalty=config.frequency_penalty,
-            presence_penalty=config.presence_penalty,
-        )
+        with st.chat_message("assistant"):
+            try:
+                stream = client.chat.completions.create(
+                    model=st.session_state["openai_model"],
+                    messages=[
+                        {"role": m["role"], "content": m["content"]}
+                        for m in st.session_state["display_messages"]
+                    ],
+                    stream=True,
+                    temperature=config.temperature,
+                    max_tokens=config.max_tokens,
+                    frequency_penalty=config.frequency_penalty,
+                    presence_penalty=config.presence_penalty,
+                )
+                response = st.write_stream(stream)
+                # Append the full response to the session state for display
+                st.session_state["display_messages"].append(
+                    {"role": "assistant", "content": response}
+                )
+            except Exception as e:
+                st.error(f"An error occurred: {str(e)}")
 
-        # Correctly extract the full response from the API's return object.
-        full_response = response.choices[0].message.content
-
-        # Append the full response to the session state for display.
-        st.session_state["display_messages"].append({"role": "assistant", "content": full_response})
-
-        # Directly display the assistant's response in the chat container
-        with st.container():
-            st.chat_message("assistant").write(full_response)
+# Add Clear Chat History button between container and warning message
+if st.button("Clear Chat History"):
+    reset_chat_history()
 
 st.markdown(config.warning_message, unsafe_allow_html=True)
 
@@ -251,25 +265,26 @@ st.sidebar.title("Resources")
 
 for resource in config.resources:
     with st.sidebar:
-        with st.expander(resource["title"]):
-            st.markdown(f"Description: {resource['description']}")
-            if "url" in resource:
-                st.markdown(f"[{resource['title']}]({resource['url']})")
-            if "file_path" in resource:
-                file_path = resource["file_path"]
-                if os.path.exists(file_path):
-                    with open(file_path, "rb") as file:
-                        file_bytes = file.read()
-                    with st.spinner(f"Loading {resource['title']}..."):
-                        st.download_button(
-                            label=resource["title"],
-                            data=file_bytes,
-                            file_name=os.path.basename(file_path),
-                            mime="application/octet-stream",
-                            help=resource["description"],
-                        )
-                else:
-                    st.warning(f"File not found: {file_path}")
+        with st.sidebar:
+            with st.expander(resource["title"]):
+                st.markdown(f"Description: {resource['description']}")
+                if "url" in resource:
+                    st.markdown(f"[{resource['title']}]({resource['url']})")
+                if "file_path" in resource:
+                    file_path = resource["file_path"]
+                    if os.path.exists(file_path):
+                        with open(file_path, "rb") as file:
+                            file_bytes = file.read()
+                        with st.spinner(f"Loading {resource['title']}..."):
+                            st.download_button(
+                                label=resource["title"],
+                                data=file_bytes,
+                                file_name=os.path.basename(file_path),
+                                mime="application/octet-stream",
+                                help=resource["description"],
+                            )
+                    else:
+                        st.warning(f"File not found: {file_path}")
 
 # Footer
 with st.sidebar:
