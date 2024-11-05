@@ -131,11 +131,11 @@ initial_context = {
     "content": config.initial_prompt
 }
 
-# Initialize the session state variables for selected term, schema, and display messages
+# Initialize the session state variables for selected term, context, and display messages
 if 'selected_term' not in st.session_state:
     st.session_state.selected_term = None
-if 'selected_schema' not in st.session_state:
-    st.session_state.selected_schema = None
+if 'selected_context' not in st.session_state:
+    st.session_state.selected_context = None
 if 'display_messages' not in st.session_state:
     st.session_state.display_messages = [initial_context]
 
@@ -148,15 +148,15 @@ if 'display_term' not in st.session_state:
 # Dropdown menu for selecting a term
 selected_term = st.selectbox('Select a term/question and brainstorm everything about it. This could include a definition, examples, misconceptions, associations, etc.', term_list)
 if selected_term:
-    selected_schema = terms.loc[terms['TERM'] == selected_term, 'SCHEMA'].values[0]
+    selected_context = terms.loc[terms['TERM'] == selected_term, 'CONTEXT'].values[0]
     st.session_state.selected_term = selected_term
-    st.session_state.selected_schema = selected_schema
+    st.session_state.selected_context = selected_context
     st.session_state.display_term = True
 
 # Ensure the session state variables are set correctly
-# if st.session_state.get('selected_term') and st.session_state.get('selected_schema'):
+# if st.session_state.get('selected_term') and st.session_state.get('selected_context'):
     # Update the prompt for the API
-    updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_schema, term_list)
+    updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_context, term_list)
     initial_context = {
         "role": "system", 
         "content": updated_prompt
@@ -164,7 +164,7 @@ if selected_term:
     # Reset the conversation with the new initial context
     st.session_state.display_messages[0] = [initial_context]
 
-# Display the selected term and its schema
+# Display the selected term and its context
 if st.session_state.display_term and st.session_state.selected_term:
     st.header(st.session_state.selected_term)
     # Pass the displayed term to the assistant as part of the message
@@ -184,9 +184,9 @@ if "openai_model" not in st.session_state:
 if "display_messages" not in st.session_state:
     st.session_state.display_messages[0] = [initial_context]
 
-# Update initial_context with the latest selected term and schema
-if st.session_state.get('selected_term') and st.session_state.get('selected_schema'):
-    updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_schema, term_list)
+# Update initial_context with the latest selected term and context
+if st.session_state.get('selected_term') and st.session_state.get('selected_context'):
+    updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_context, term_list)
     initial_context = {
         "role": "system", 
         "content": updated_prompt
@@ -210,8 +210,8 @@ def reset_chat_history():
     # Reset other chat-related session states if they exist
     if 'selected_term' in st.session_state:
         st.session_state.selected_term = None
-    if 'selected_schema' in st.session_state:
-        st.session_state.selected_schema = None
+    if 'selected_context' in st.session_state:
+        st.session_state.selected_context = None
     if 'display_term' in st.session_state:
         st.session_state.display_term = False
     st.rerun()

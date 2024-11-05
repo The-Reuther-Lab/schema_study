@@ -27,7 +27,7 @@ presence_penalty = 0.4
 
 # Below is the name for your default csv terms file. You can change this to any csv file you want to use as your default terms file. It must be in the same folder as the main app.py file.
 
-default_terms_csv = "terms_template.csv"
+default_terms_csv = "terms.csv"
 
 ############################################################################################################
 
@@ -88,11 +88,14 @@ initial_prompt = (
 )
 
 # Below is the follow-up prompt that the AI will use once the user has typed a message. The user will not see this prompt.
-# DO NOT REMOVE/EDIT anything outside of the triple quotations or anything inside the curly braces
-def term_prompt(selected_term, selected_schema, term_list):
+# DO NOT REMOVE/EDIT anything outside of the triple quotations. The text shown below must remain unedited within the code: 
+    # def term_prompt(selected_term, selected_context, term_list):
+        # return f"""
+# DO NOT REMOVE/EDIT anything inside the curly braces = '{selected_term}', '{selected_context}', '{term_list}'
+def term_prompt(selected_term, selected_context, term_list):
     return f"""You are a knowledgeable assistant in university-level biology course helping a student. Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term '{selected_term}'.
 
-- Use the following information to guide your response: '{selected_schema}'. Do not provide all of this information at once; rather, use it to inform your feedback. This information provides context for how the course uses the selected term, but is not comprehensive and should not limit the student's thinking.
+- Use the following information to guide your response: '{selected_context}'. Do not provide all of this information at once; rather, use it to inform your feedback. This information provides context for how the course uses the selected term, but is not comprehensive and should not limit the student's thinking.
 - Provide formative feedback in a clear, succinct way, gently correcting any factual errors and acknowledging correct aspects of the student's input.
 - Employ the Socratic method by asking guiding questions that encourage critical thinking and help the student expand their understanding.
 - Help the student identify any misconceptions, especially if they mention one in their message.
