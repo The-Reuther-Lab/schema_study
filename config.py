@@ -34,7 +34,7 @@ default_terms_csv = "terms.csv"
 # Below is all the text you can customize for the app. Don't remove the quotations around the text. Don't change the variable names.
 
 # The title of the app
-app_title = "Schema Study"
+app_title = "Schema Study - Instructor Evaluation Version"
 
 # The subtitle of the app
 app_author = "by Keefe Reuther and Liam O Mueller, Assistant Teaching Professors in the UC San Diego School of Biological Sciences"
@@ -65,7 +65,7 @@ sidebar_instructions = "Do you have your own terms to study? If so, download the
 
 app_creation_message = "The template for this app was created by Keefe Reuther, Liam O Mueller, and the members of the Reuther Lab - [https://reutherlab.biosci.ucsd.edu/](https://reutherlab.netlify.app/)"
 
-app_repo_license_message = "It can be found at [https://github.com/The-Reuther-Lab/schema_study](https://github.com/The-Reuther-Lab/schema_study) and is distributed under the GNU GPL-3 License."
+app_repo_license_message = "It can be found at [https://github.com/The-Reuther-Lab/schema_study](https://github.com/The-Reuther-Lab/schema_study) and is distributed under the GNU GPL-3 License. If you are interested in creating your own version of this application for use in your classroom, please email kdreuther@ucsd.edu for more information."
 
 warning_message = "**ChatGPT can make errors and does not replace verified and reputable online and classroom resources.**"
 
@@ -109,6 +109,23 @@ def term_prompt(selected_term, selected_context, term_list):
 - You are only allowed to talk about topics relevant to what a biology student would need to know to succeed in a biology course, graduate, and follow a path to a relevant career. If asked about anything else, you should say that you are not allowed to talk about that topic.For example, you can talk about the biology of bats, but not the history of bats in literature. You can talk about finding an appropriate graduate program or how to copy edit a lab report, but not how to write science fiction.
 - Regardless of chat history, you should be default assume the student is asking about '{selected_term}'. However, if they explicitly ask about another term or concept, you should answer that question.
 - End your responses with an open invitation for further questions to keep the dialogue engaging."""
+
+# Below is the prompt that will be displayed to the instructor. It is the same as the term_prompt, but without the context from the terms.csv file.
+display_prompt = """
+- You are a knowledgeable assistant in a university-level biology course helping a student. Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term selected in the dropdown menu.
+- Always preferentially use the context from the terms.csv file to guide your responses. Do not provide all of this information at once; rather, use it to inform your feedback. This information provides context for how the course uses the selected term, but is not comprehensive and should not limit the student's thinking.
+- Provide formative feedback in a clear, succinct way, gently correcting any factual errors and acknowledging correct aspects of the student's input.
+- Employ the Socratic method by asking guiding questions that encourage critical thinking and help the student expand their understanding.
+- Help the student identify any misconceptions, especially if they mention one in their message.
+- Assist them in finding relevant connections between the selected term and all other terms from the dropdown list.
+- Make your responses clear and structured, while stimulating further conversation.
+- Use universal examples and analogies that are accurate and culturally inclusive.
+- Avoid extraneous language and focus on fostering comprehension.
+- Do not answer multiple choice questions, fill in the blank questions, or true/false questions. These are not allowed.
+- You are only allowed to talk about topics relevant to what a biology student would need to know to succeed in a biology course, graduate, and follow a path to a relevant career. If asked about anything else, you should say that you are not allowed to talk about that topic. For example, you can talk about the biology of bats, but not the history of bats in literature. You can talk about finding an appropriate graduate program or how to copy edit a lab report, but not how to write science fiction.
+- Regardless of chat history, you should be default assume the student is asking about the selected term. However, if they explicitly ask about another term or concept, you should answer that question.
+- End your responses with an open invitation for further questions to keep the dialogue engaging.
+"""
 
 
 ############################################################################################################

@@ -48,12 +48,20 @@ if not check_password():
 # Set the page to wide or centered mode
 st.set_page_config(layout="wide")
 
+# Load the terms file into a DataFrame
+df = pd.read_csv(config.default_terms_csv)
+
 # Streamlit app layout
 st.title(config.app_title)
 st.markdown(config.intro_para)
 st.caption(config.app_author)
-with st.expander("INSTRUCTIONS:"):
+with st.expander("INSTRUCTIONS FOR STUDENTS:"):
     st.markdown(config.instructions)
+with st.expander("**INSTRUCTORS**: For a look at the current terms file driving the interaction, click here:"):
+    st.markdown("This is the terms.csv file that drives the interaction. You can edit this file to change the terms and context that the chatbot uses. You may add any term or phrase. You may leave the context blank if you prefer or you can add anything relevant that the GPT does not normally know about the term. This may include relevant learning objectives, course examples, notable scientists, assessment dates, syllabus information, etc.")
+    st.table(df)
+with st.expander("**INSTRUCTORS**: For a look at the prompt driving the chatbot, click here:"):
+    st.markdown(config.display_prompt)
 st.sidebar.title(config.sidebar_title)
 with st.sidebar:
         with st.expander("Click here for instructions."):
@@ -117,7 +125,7 @@ else:
 # Extract first column values
 term_list = get_first_column_values(terms)
 
-st.sidebar.markdown(create_download_link(template_file_path, "terms_template.csv"), unsafe_allow_html=True)
+st.sidebar.markdown(create_download_link(template_file_path, "terms.csv"), unsafe_allow_html=True)
 
 # line break in the sidebar
 st.sidebar.markdown('<hr>', unsafe_allow_html=True)
