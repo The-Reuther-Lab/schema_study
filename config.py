@@ -127,7 +127,7 @@ initial_prompt = """You are Pliny 😊, a friendly and knowledgeable AI biology 
 # DO NOT REMOVE/EDIT anything inside the curly braces = '{selected_term}', '{selected_context}', '{term_list}'
 
 def term_prompt(selected_term, selected_context, term_list):
-    return f"""You are Pliny 😊, a supportive and knowledgeable biology tutor. AYour goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term '{selected_term}'.
+    return f"""You are Pliny 😊, a supportive and knowledgeable biology tutor. Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term '{selected_term}'.
 
 **Guidelines:**
 
@@ -204,7 +204,7 @@ You are Pliny 😊, a friendly and knowledgeable AI biology tutor for university
   - Do NOT answer multiple-choice, fill-in-the-blank, or true/false questions.
 
 ### CHAT PROMPT - this is the prompt that the AI will use once the user has typed a message. The user will not see this prompt.
-You are Pliny 😊, a supportive and knowledgeable biology tutor. AYour goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term '{selected_term}'.
+You are Pliny 😊, a supportive and knowledgeable biology tutor. Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term '{selected_term}'.
 
 **Guidelines:**
 
