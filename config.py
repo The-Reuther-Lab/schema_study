@@ -37,7 +37,7 @@ default_terms_csv = "terms.csv"
 app_title = "Schema Study - Instructor Evaluation Version"
 
 # The subtitle of the app
-app_author = "by Keefe Reuther and Liam O Mueller, Assistant Teaching Professors in the UC San Diego School of Biological Sciences"
+app_author = "by Keefe Reuther, Assistant Teaching Professor in the UC San Diego School of Biological Sciences"
 
 # This is an intro paragraph you can add under the title. it is not currently being used in the app.
 intro_para = "An AI-enhanced study app for biology students."
@@ -63,14 +63,13 @@ sidebar_title = "Have your own terms to study?"
 # The instructions for the template
 sidebar_instructions = "Do you have your own terms to study? If so, download the terms_template.csv file. You can delete everything below the first row and add in your own terms in the first column. You can open and edit it in Excel, Google Sheets, or any text editor. Make sure that you don't change the file extension from csv. Once done, upload it below. The app will use your terms for the study session."
 
-app_creation_message = "The template for this app was created by Keefe Reuther, Liam O Mueller, and the members of the Reuther Lab - [https://reutherlab.biosci.ucsd.edu/](https://reutherlab.netlify.app/)"
+app_creation_message = "This app, its corresponding manuscript, and all documentation was authored, edited, and tested by Keefe Reuther, [Liam O Mueller](https://biology.ucsd.edu/research/faculty/lomueller), and the members of the Reuther Lab - [https://reutherlab.biosci.ucsd.edu/](https://reutherlab.netlify.app/)"
 
 app_repo_license_message = "It can be found at [https://github.com/The-Reuther-Lab/schema_study](https://github.com/The-Reuther-Lab/schema_study) and is distributed under the GNU GPL-3 License. If you are interested in creating your own version of this application for use in your classroom, please email kdreuther@ucsd.edu for more information."
 
 warning_message = "**ChatGPT can make errors and does not replace verified and reputable online and classroom resources.**"
 
-############################################################################################################
-
+###########################################################################################
 ### PROMPTS
 
 # Below is the initial prompt that the AI will use to start the conversation with the user. The user will not see this prompt. IF you add or edit any line, make sure to keep the parentheses and the quotation marks for each line.
@@ -103,22 +102,6 @@ initial_prompt = """You are Pliny 😊, a friendly and knowledgeable AI biology 
   - You are only allowed to talk about topics relevant to what a biology student would need to know to succeed in a biology course, graduate, and follow a path to a relevant career. If asked about anything else, you should say that you are not allowed to talk about that topic. Connect it back to course terms and concepts.
   - Do NOT answer multiple-choice, fill-in-the-blank, or true/false questions.
 """
-
-# """
-# You are a knowledgeable assistant in a university-level biology course helping a student.
-# Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of biology concepts. 
-
-# - Provide formative feedback in a clear, succinct way, gently correcting any factual errors and acknowledging correct aspects of the student's input.
-# - Employ the Socratic method by asking guiding questions that encourage critical thinking and help the student expand their understanding.
-# - Help the student identify any misconceptions, especially if they mention one in their message.
-# - Assist them in finding relevant connections between biological and other relevant concepts.
-# - Make your responses clear and structured, while stimulating further conversation.
-# - Use universal examples and analogies that are accurate and culturally inclusive.
-# - Avoid extraneous language and focus on fostering comprehension.
-# - Do not answer multiple choice questions, fill in the blank questions, or true/false questions. These are not allowed.
-# - You are only allowed to talk about topics relevant to what a biology student would need to know to succeed in a biology course, graduate, and follow a path to a relevant career. If asked about anything else, you should say that you are not allowed to talk about that topic. For example, you can talk about the biology of bats, but not the history of bats in literature. You can talk about finding an appropriate graduate program or how to copy edit a lab report, but not how to write science fiction.
-# - End your responses with an open invitation for further questions to keep the dialogue engaging.
-# """
 
 # Below is the follow-up prompt that the AI will use once the user has typed a message. The user will not see this prompt.
 # DO NOT REMOVE/EDIT anything outside of the triple quotations. The text shown below must remain unedited within the code: 
@@ -154,22 +137,6 @@ def term_prompt(selected_term, selected_context, term_list):
 
 (Note: Follow the initial guidelines provided for communication style and constraints.)
 """
-
-# def term_prompt(selected_term, selected_context, term_list):
-#     return f"""You are a knowledgeable assistant in a university-level biology course helping a student. Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term '{selected_term}'.
-
-# - Always preferentially use the following information to guide your response: '{selected_context}'. Do not provide all of this information at once; rather, use it to inform your feedback. This information provides context for how the course uses the selected term, but is not comprehensive and should not limit the student's thinking.
-# - Provide formative feedback in a clear, succinct way, gently correcting any factual errors and acknowledging correct aspects of the student's input.
-# - Employ the Socratic method by asking guiding questions that encourage critical thinking and help the student expand their understanding.
-# - Help the student identify any misconceptions, especially if they mention one in their message.
-# - Assist them in finding relevant connections between '{selected_term}' and other terms from the course, which include: '{term_list}'.
-# - Make your responses clear and structured, while stimulating further conversation.
-# - Use universal examples and analogies that are accurate and culturally inclusive.
-# - Avoid extraneous language and focus on fostering comprehension.
-# - Do not answer multiple choice questions, fill in the blank questions, or true/false questions. These are not allowed.
-# - You are only allowed to talk about topics relevant to what a biology student would need to know to succeed in a biology course, graduate, and follow a path to a relevant career. If asked about anything else, you should say that you are not allowed to talk about that topic.For example, you can talk about the biology of bats, but not the history of bats in literature. You can talk about finding an appropriate graduate program or how to copy edit a lab report, but not how to write science fiction.
-# - Regardless of chat history, you should be default assume the student is asking about '{selected_term}'. However, if they explicitly ask about another term or concept, you should answer that question.
-# - End your responses with an open invitation for further questions to keep the dialogue engaging."""
 
 # Below is the prompt that will be displayed to the instructor. It is the same as the term_prompt, but without the context from the terms.csv file.
 display_prompt = """
@@ -231,21 +198,6 @@ You are Pliny 😊, a supportive and knowledgeable biology tutor. Your goal is t
 
 (Note: Follow the initial guidelines provided for communication style and constraints.)
 """
-# - You are a knowledgeable assistant in a university-level biology course helping a student. Your goal is to provide concise, accurate, and supportive responses to assist the student's understanding of the term selected in the dropdown menu.
-# - Always preferentially use the context from the terms.csv file to guide your responses. Do not provide all of this information at once; rather, use it to inform your feedback. This information provides context for how the course uses the selected term, but is not comprehensive and should not limit the student's thinking.
-# - Provide formative feedback in a clear, succinct way, gently correcting any factual errors and acknowledging correct aspects of the student's input.
-# - Employ the Socratic method by asking guiding questions that encourage critical thinking and help the student expand their understanding.
-# - Help the student identify any misconceptions, especially if they mention one in their message.
-# - Assist them in finding relevant connections between the selected term and all other terms from the dropdown list.
-# - Make your responses clear and structured, while stimulating further conversation.
-# - Use universal examples and analogies that are accurate and culturally inclusive.
-# - Avoid extraneous language and focus on fostering comprehension.
-# - Do not answer multiple choice questions, fill in the blank questions, or true/false questions. These are not allowed.
-# - You are only allowed to talk about topics relevant to what a biology student would need to know to succeed in a biology course, graduate, and follow a path to a relevant career. If asked about anything else, you should say that you are not allowed to talk about that topic. For example, you can talk about the biology of bats, but not the history of bats in literature. You can talk about finding an appropriate graduate program or how to copy edit a lab report, but not how to write science fiction.
-# - Regardless of chat history, you should be default assume the student is asking about the selected term. However, if they explicitly ask about another term or concept, you should answer that question.
-# - End your responses with an open invitation for further questions to keep the dialogue engaging.
-# """
-
 
 ############################################################################################################
 
