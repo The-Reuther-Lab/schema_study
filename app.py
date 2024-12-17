@@ -13,34 +13,43 @@ import io
 import config
 from openai import OpenAI
 
+# Set up logging
+logging.basicConfig(filename='app.log', level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+
 ############################################################################################################
 # Password protection
 
-def check_password():
-    """Returns `True` if the user had the correct password."""
+def check_credentials():
+    """Returns `True` if the user had the correct username and password."""
 
-    def password_entered():
-        """Checks whether a password entered by the user is correct."""
-        if hmac.compare_digest(st.session_state["password"], st.secrets["password"]):
-            st.session_state["password_correct"] = True
+    def credentials_entered():
+        """Checks whether the entered username and password are correct."""
+        if (
+            hmac.compare_digest(st.session_state["username"], st.secrets["username"]) and
+            hmac.compare_digest(st.session_state["password"], st.secrets["password"])
+        ):
+            st.session_state["credentials_correct"] = True
+            del st.session_state["username"]  # Don't store the username.
             del st.session_state["password"]  # Don't store the password.
         else:
-            st.session_state["password_correct"] = False
+            st.session_state["credentials_correct"] = False
 
-    # Return True if the password is validated.
-    if st.session_state.get("password_correct", False):
+    # Return True if the credentials are validated.
+    if st.session_state.get("credentials_correct", False):
         return True
 
-    # Show input for password.
-    st.text_input(
-        "Password", type="password", on_change=password_entered, key="password"
-    )
-    if "password_correct" in st.session_state:
-        st.error("😕 Password incorrect")
+    # Show input for username and password.
+    st.text_input("Username", on_change=credentials_entered, key="username")
+    st.text_input("Password", type="password", on_change=credentials_entered, key="password")
+    
+    if "credentials_correct" in st.session_state:
+        logging.warning("Invalid login attempt")  # Log invalid login attempts
     return False
 
-if not check_password():
-    st.stop()  # Do not continue if check_password is not True.
+if not check_credentials():
+    st.stop()  # Do not continue if check_credentials is not True.
+else:
+    logging.info("Successful login")  # Log successful logins
 
 ############################################################################################################
 # Streamlit app layout
@@ -55,13 +64,6 @@ df = pd.read_csv(config.default_terms_csv)
 st.title(config.app_title)
 st.markdown(config.intro_para)
 st.caption(config.app_author)
-with st.expander("INSTRUCTIONS FOR STUDENTS:"):
-    st.markdown(config.instructions)
-with st.expander("**INSTRUCTORS**: For a look at the current terms file driving the interaction, click here:"):
-    st.markdown("This is the terms.csv file that drives the interaction. You can edit this file to change the terms and context that the chatbot uses. You may add any term or phrase. You may leave the context blank if you prefer or you can add anything relevant that the GPT does not normally know about the term. This may include relevant learning objectives, course examples, notable scientists, assessment dates, syllabus information, etc.")
-    st.table(df)
-with st.expander("**INSTRUCTORS**: For a look at the prompt driving the chatbot, click here:"):
-    st.markdown(config.display_prompt)
 st.sidebar.title(config.sidebar_title)
 with st.sidebar:
         with st.expander("Click here for instructions."):
@@ -71,7 +73,6 @@ with st.sidebar:
 # File Uploader in sidebar
 
 # Load terms from a CSV file
-# https://discuss.streamlit.io/t/how-to-upload-a-csv-file/7052/2
 def load_terms(file_input):
     try:
         if isinstance(file_input, str):
@@ -133,52 +134,59 @@ st.sidebar.markdown('<hr>', unsafe_allow_html=True)
 ############################################################################################################
 # Term Selection and session state
 
-# Define a basic initial context at the beginning of your script
-initial_context = {
-    "role": "system",
-    "content": config.initial_prompt
-}
-
 # Initialize the session state variables for selected term, context, and display messages
 if 'selected_term' not in st.session_state:
     st.session_state.selected_term = None
 if 'selected_context' not in st.session_state:
     st.session_state.selected_context = None
 if 'display_messages' not in st.session_state:
-    st.session_state.display_messages = [initial_context]
+    st.session_state.display_messages = []
 
 # Initialize session states for the selected term, counter, and display flag
-if 'selected_term' not in st.session_state:
-    st.session_state.selected_term = None
 if 'display_term' not in st.session_state:
-   st.session_state.display_term = False
+    st.session_state.display_term = False
+if 'initial_message_displayed' not in st.session_state:
+    st.session_state.initial_message_displayed = False
+
+# Initialize state to track the previously selected term
+if 'old_term' not in st.session_state:
+    st.session_state.old_term = None
 
 # Dropdown menu for selecting a term
-selected_term = st.selectbox('Select a term/question and brainstorm everything about it. This could include a definition, examples, misconceptions, associations, etc.', term_list)
+selected_term = st.selectbox('**SELECT FROM THE DROPDOWN MENU**', term_list)
+
 if selected_term:
+    # If a new term is selected (including first time selection), reset or show the message
+    if selected_term != st.session_state.old_term:
+        user_message = f"What is one thing you know about '{selected_term}'? What do you want to know about it? This could include a definition, examples, misconceptions, associations with other course terms, opinions, etc."
+        st.session_state["display_messages"].append({"role": "user", "content": user_message})
+        # Update old_term in session state
+        st.session_state.old_term = selected_term
+    
     selected_context = terms.loc[terms['TERM'] == selected_term, 'CONTEXT'].values[0]
     st.session_state.selected_term = selected_term
     st.session_state.selected_context = selected_context
     st.session_state.display_term = True
-
-# Ensure the session state variables are set correctly
-# if st.session_state.get('selected_term') and st.session_state.get('selected_context'):
+    
     # Update the prompt for the API
     updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_context, term_list)
-    initial_context = {
-        "role": "system", 
-        "content": updated_prompt
-    }
-    # Reset the conversation with the new initial context
-    st.session_state.display_messages[0] = [initial_context]
+    
+else:
+    # If nothing is selected or the selection is cleared, reset the old_term
+    st.session_state.old_term = None
 
 # Display the selected term and its context
 if st.session_state.display_term and st.session_state.selected_term:
     st.header(st.session_state.selected_term)
-    # Pass the displayed term to the assistant as part of the message
-    user_message = f"Define '{st.session_state.selected_term}':"
-elif not st.session_state.selected_term:
-    st.write("")
+
+with st.expander("INSTRUCTIONS FOR STUDENTS:"):
+    st.markdown(config.instructions)
+with st.expander("**INSTRUCTORS**: For a look at the current terms file driving the interaction, click here:"):
+    st.markdown("This is the terms.csv file that drives the interaction. You can edit this file to change the terms and context that the chatbot uses. You may add any term or phrase. You may leave the context blank if you prefer or you can add anything relevant that the GPT does not normally know about the term. This may include relevant learning objectives, course examples, notable scientists, assessment dates, syllabus information, etc.")
+    st.table(df)
+with st.expander("**INSTRUCTORS**: For a look at the prompt driving the chatbot, click here:"):
+    prompt_text = config.term_prompt(st.session_state.selected_term, st.session_state.selected_context, term_list)
+    st.markdown(prompt_text)
 
 ############################################################################################################
 # ChatGPT
@@ -190,20 +198,19 @@ if "openai_model" not in st.session_state:
     st.session_state["openai_model"] = config.ai_model
 
 if "display_messages" not in st.session_state:
-    st.session_state.display_messages[0] = [initial_context]
+    st.session_state.display_messages = []
 
 # Update initial_context with the latest selected term and context
 if st.session_state.get('selected_term') and st.session_state.get('selected_context'):
     updated_prompt = config.term_prompt(st.session_state.selected_term, st.session_state.selected_context, term_list)
-    initial_context = {
-        "role": "system", 
-        "content": updated_prompt
-    }
     # Replace the initial context in display_messages with the updated prompt
-    st.session_state.display_messages[0] = initial_context
+    if st.session_state.display_messages:
+        st.session_state.display_messages[0]["content"] = updated_prompt
+    else:
+        st.session_state.display_messages = [{"role": "system", "content": updated_prompt}]
 
 # Get user input
-prompt = st.chat_input("Type your message here...")
+prompt = st.chat_input("What do you know? What do you want to know?")
 
 # Input for new messages
 if prompt:
@@ -214,7 +221,7 @@ if prompt:
 
 # Function to reset all chat-related session state
 def reset_chat_history():
-    st.session_state["display_messages"] = [initial_context]
+    st.session_state["display_messages"] = []
     # Reset other chat-related session states if they exist
     if 'selected_term' in st.session_state:
         st.session_state.selected_term = None
@@ -256,12 +263,16 @@ with st.container(height=400, border=True):
                 st.session_state["display_messages"].append(
                     {"role": "assistant", "content": response}
                 )
+                logging.info(f"User prompt: {prompt}")  # Log user prompts
+                logging.info(f"Assistant response: {response}")  # Log assistant responses
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
+                logging.exception(f"Error generating response: {e}")  # Log errors
 
 # Add Clear Chat History button between container and warning message
 if st.button("Clear Chat History"):
     reset_chat_history()
+    logging.info("Chat history cleared")  # Log when chat history is cleared
 
 st.markdown(config.warning_message, unsafe_allow_html=True)
 
