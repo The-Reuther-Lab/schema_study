@@ -85,7 +85,7 @@ def term_prompt(selected_term, selected_context, term_list):
 
 - **Communication Style:**
   - Use clear, simple language and avoid unnecessary jargon.
-  - Be succinct and limit your total response to 1 paragraph.
+  - Be succinct but make sure to respond to all statements made by the user.
   - Be approachable and professional.
   - Provide information step-by-step to manage cognitive load.
   - Use culturally inclusive examples and analogies.
